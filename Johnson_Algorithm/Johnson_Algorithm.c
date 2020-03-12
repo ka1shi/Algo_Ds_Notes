@@ -99,16 +99,6 @@ int* BellmanFord(struct Graph* graph, int extra, int* dist)
         }
     }
     
-    // Information Message
-    /*
-    printf("Distance of nodes from extra node\n");
-    
-    for(int i=0; i<V; i++)
-    {
-        printf("Distance from %d to %d is: %d\n", V-1, i, dist[i]);
-    }
-    printf("\n");*/
-    
     return dist;
 }
 
@@ -377,10 +367,5 @@ Distance from 6 to 3 is :-2147483648
 Distance from 6 to 4 is :6
 Distance from 6 to 5 is :6
 Distance from 6 to 6 is :0
-
         
  */
-
-
-
-
