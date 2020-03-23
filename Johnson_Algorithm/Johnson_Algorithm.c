@@ -27,11 +27,11 @@ struct Graph* createGraph(int V, int E)
     
     // Allocate memory to V vertices of graph
     struct Graph* graph = malloc(V*sizeof(int));
-    graph->V = V;
-    graph->E = E;
+    graph -> V = V;
+    graph -> E = E;
     
     // Allocate memory to E Edges of graph
-    graph->edge = malloc(E*sizeof(int));
+    graph -> edge = malloc(E*sizeof(int));
     
     // Information Message
     //printf("The graph is created with %d vertices and %d edges.\n", V, E);
@@ -42,9 +42,9 @@ struct Graph* addEdge(struct Graph* graph, int src, int des, int wt, int i)
 {
     // Add Edges with source, destination and weight
     
-    graph->edge[i].source = src;
-    graph->edge[i].destination = des;
-    graph->edge[i].weight = wt;
+    graph -> edge[i].source = src;
+    graph -> edge[i].destination = des;
+    graph -> edge[i].weight = wt;
     
     // Information Message
     //printf("Edge from %d to %d with distance %d is added.\n",src, des, wt);
@@ -56,11 +56,11 @@ void printGraph(struct Graph* graph)
 {
     // Print graph as distance of connected vertex with each other
     
-    int E = graph->E;
+    int E = graph -> E;
     
     for(int i=0; i<E; i++)
     {
-        printf("The distance from %d to %d is: %d\n",graph->edge[i].source, graph->edge[i].destination, graph->edge[i].weight);
+        printf("The distance from %d to %d is: %d\n",graph -> edge[i].source, graph -> edge[i].destination, graph -> edge[i].weight);
     }
     printf("\n");
 }
@@ -69,8 +69,8 @@ int* BellmanFord(struct Graph* graph, int extra, int* dist)
 {
     // Shortest distance from extra vertex to every vertex in graph
     
-    int V=graph->V;
-    int E=graph->E;
+    int V=graph -> V;
+    int E=graph -> E;
     
     // Initialize distance from extra vertex to all vertices as Infinite(INT_MAX)
     for(int i=0; i<V+1; i++)
@@ -86,9 +86,9 @@ int* BellmanFord(struct Graph* graph, int extra, int* dist)
     {
         for(int j=0; j<E+V; j++)
         {
-            int u = graph->edge[j].source;
-            int v = graph->edge[j].destination;
-            int w = graph->edge[j].weight;
+            int u = graph -> edge[j].source;
+            int v = graph -> edge[j].destination;
+            int w = graph -> edge[j].weight;
             
             // Check if old distance is greater than new distance
             if(dist[u]!=INT_MAX && dist[v]>dist[u]+w)
@@ -108,11 +108,11 @@ struct Graph* updateEdge(struct Graph* graph, int dist[], int E)
     // To make distance between all vertices poitive
     for(int i=0; i<E; i++)
     {
-        int u = graph->edge[i].source;
-        int v = graph->edge[i].destination;
+        int u = graph -> edge[i].source;
+        int v = graph -> edge[i].destination;
         
         // Update distance between from vertex u to v as => distance of u from extra vertex - distance of v from extra vertex + original distance from u to v
-        graph->edge[i].weight = dist[u]-dist[v]+graph->edge[i].weight;
+        graph -> edge[i].weight = dist[u]-dist[v]+graph -> edge[i].weight;
     }
     
     return graph;
@@ -143,9 +143,9 @@ int askGraph(struct Graph* graph, int u, int v, int E)
     
     for(int i=0; i<E; i++)
     {
-        if(graph->edge[i].source==u && graph->edge[i].destination==v)
+        if(graph -> edge[i].source==u && graph -> edge[i].destination==v)
         {
-            return graph->edge[i].weight;
+            return graph -> edge[i].weight;
         }
     }
     // return INT_MIN if edge from u to v does not exist
@@ -281,7 +281,7 @@ int main(){
     {
         for(int j=0; j<V; j++)
         {
-            if(distance[i][j]==INT_MAX)
+            if(distance[i][j] == INT_MAX)
             {
                 distance[i][j] = INT_MAX;
                 // To indicate that j vertex is not reachable from i vertex
@@ -367,5 +367,5 @@ Distance from 6 to 3 is :-2147483648
 Distance from 6 to 4 is :6
 Distance from 6 to 5 is :6
 Distance from 6 to 6 is :0
-        
+   
  */
