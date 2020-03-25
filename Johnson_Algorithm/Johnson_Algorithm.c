@@ -26,15 +26,15 @@ struct Graph* createGraph(int V, int E)
     // Create a graph with V vertices and E Edges
     
     // Allocate memory to V vertices of graph
-    struct Graph* graph = malloc(V*sizeof(int));
+    struct Graph* graph = malloc(V * sizeof(int));
     graph -> V = V;
     graph -> E = E;
     
     // Allocate memory to E Edges of graph
-    graph -> edge = malloc(E*sizeof(int));
+    graph -> edge = malloc(E * sizeof(int));
     
     // Information Message
-    //printf("The graph is created with %d vertices and %d edges.\n", V, E);
+    // printf("The graph is created with %d vertices and %d edges.\n", V, E);
     return graph;
 }
 
@@ -47,7 +47,7 @@ struct Graph* addEdge(struct Graph* graph, int src, int des, int wt, int i)
     graph -> edge[i].weight = wt;
     
     // Information Message
-    //printf("Edge from %d to %d with distance %d is added.\n",src, des, wt);
+    // printf("Edge from %d to %d with distance %d is added.\n",src, des, wt);
     
     return graph;
 }
@@ -58,7 +58,7 @@ void printGraph(struct Graph* graph)
     
     int E = graph -> E;
     
-    for(int i=0; i<E; i++)
+    for(int i = 0; i < E; i++)
     {
         printf("The distance from %d to %d is: %d\n",graph -> edge[i].source, graph -> edge[i].destination, graph -> edge[i].weight);
     }
@@ -69,11 +69,11 @@ int* BellmanFord(struct Graph* graph, int extra, int* dist)
 {
     // Shortest distance from extra vertex to every vertex in graph
     
-    int V=graph -> V;
-    int E=graph -> E;
+    int V = graph -> V;
+    int E = graph -> E;
     
     // Initialize distance from extra vertex to all vertices as Infinite(INT_MAX)
-    for(int i=0; i<V+1; i++)
+    for(int i = 0; i < V+1; i++)
     {
         dist[i] = INT_MAX;
     }
@@ -82,19 +82,19 @@ int* BellmanFord(struct Graph* graph, int extra, int* dist)
     dist[extra] = 0;
     
     // Shortest path from any vertex can have atmost V-1 edges
-    for(int i=1; i<=V; i++)
+    for(int i = 1; i <= V; i++)
     {
-        for(int j=0; j<E+V; j++)
+        for(int j = 0; j < E+V; j++)
         {
             int u = graph -> edge[j].source;
             int v = graph -> edge[j].destination;
             int w = graph -> edge[j].weight;
             
             // Check if old distance is greater than new distance
-            if(dist[u]!=INT_MAX && dist[v]>dist[u]+w)
+            if(dist[u] != INT_MAX && dist[v] > dist[u] + w)
             {
                 // Update old distance with new distance
-                dist[v] = dist[u]+w;
+                dist[v] = dist[u] + w;
             }
         }
     }
@@ -106,13 +106,13 @@ struct Graph* updateEdge(struct Graph* graph, int dist[], int E)
 {
     // Update Edge after getting distance from extra vertex to each original vertex
     // To make distance between all vertices poitive
-    for(int i=0; i<E; i++)
+    for(int i = 0; i < E; i++)
     {
         int u = graph -> edge[i].source;
         int v = graph -> edge[i].destination;
         
         // Update distance between from vertex u to v as => distance of u from extra vertex - distance of v from extra vertex + original distance from u to v
-        graph -> edge[i].weight = dist[u]-dist[v]+graph -> edge[i].weight;
+        graph -> edge[i].weight = dist[u] - dist[v] + graph -> edge[i].weight;
     }
     
     return graph;
@@ -125,10 +125,10 @@ int minDistance(int dist[], bool visited[], int V)
     // Initialize as min as INFINITY(INT_MAX)
     int min = INT_MAX, min_index;
     
-    for(int v=0; v<V; v++)
+    for(int v = 0; v < V; v++)
     {
         // If vertex is not visited and is smaller than current min
-        if(!visited[v] && dist[v]<=min)
+        if(!visited[v] && dist[v] <= min)
         {
             min = dist[v];
             min_index = v;
@@ -141,9 +141,9 @@ int askGraph(struct Graph* graph, int u, int v, int E)
 {
     // Return distance from vertex u to vertex v
     
-    for(int i=0; i<E; i++)
+    for(int i = 0; i < E; i++)
     {
-        if(graph -> edge[i].source==u && graph -> edge[i].destination==v)
+        if(graph -> edge[i].source == u && graph -> edge[i].destination == v)
         {
             return graph -> edge[i].weight;
         }
@@ -160,7 +160,7 @@ int* Dijsktra(struct Graph* graph, int V, int E, int src, int* dist)
     bool visited[V]; 
   
     // Initialize all distances as INT_MAX and visited[] as false 
-    for(int i=0; i<V; i++)
+    for(int i = 0; i < V; i++)
     {
         dist[i] = INT_MAX;
         visited[i] = false;
@@ -170,24 +170,24 @@ int* Dijsktra(struct Graph* graph, int V, int E, int src, int* dist)
     dist[src] = 0;
     
     // Shortest path from any vertex can have atmost V-1 edges
-    for(int i=0; i<V-1; i++)
+    for(int i = 0; i < V-1; i++)
     {
-        //Pick the minimum distance vertex from all vertices
+        // Pick the minimum distance vertex from all vertices
         int u = minDistance(dist, visited, V);
         
-        //Picked vertex is visited
+        // Picked vertex is visited
         visited[u] = true;
         
-        //Update distance of adjacent vertices from picked vertex
-        for(int v=0; v<V; v++)
+        // Update distance of adjacent vertices from picked vertex
+        for(int v = 0; v < V; v++)
         {
             // Update dist[v] only if it is not in visited, 
             // Distance from src to v is smaller through src to u to v
             
-            //Distance from u to v
+            // Distance from u to v
             int temp = askGraph(graph, u, v, E); 
             
-            if(!visited[v] && dist[u]!=INT_MAX && temp!=INT_MIN && dist[v]>dist[u]+temp)
+            if(!visited[v] && dist[u] != INT_MAX && temp != INT_MIN && dist[v] > dist[u] + temp)
             {
                 // Update old distance
                 dist[v] = dist[u] + temp;
@@ -207,38 +207,38 @@ int main(){
     scanf("%d %d", &V, &E);
     
     // Information Message
-    //printf("%d\n",V);
-    //printf("%d\n",E);
+    // printf("%d\n",V);
+    // printf("%d\n",E);
     
     // Declaring source, destination and weight for edges
     int src, des, wt;
     
-	// (V+1) One Extra vertex is considered for calculating distance with each vertex present in original graph 
+	// One Extra vertex (V+1) is considered for calculating distance with each vertex present in original graph 
 	// Additional V edges (E+V) from extra vertex to all original vertices is considered
 	
     struct Graph* graph = createGraph(V+1, E+V); 
     
     // Add each edge to graph with source, destination and weight
-    for(int i=0; i<E+V; i++)
+    for(int i = 0; i < E+V; i++)
     {
-        if(i<E) // Original E Edges
+        if(i < E) // Original E Edges
         {
             scanf("%d %d %d", &src, &des, &wt);
-            //printf("%d %d %d %d\n",src,des,wt, i);
+            // printf("%d %d %d %d\n",src,des,wt, i);
             graph = addEdge(graph, src, des, wt, i);
         }
         else // Extra V edges from one extra vertex to original vertices with 0 weight
         {
-            //printf("%d %d %d %d\n",V,i-E,0, i);
+            // printf("%d %d %d %d\n",V,i-E,0, i);
             graph = addEdge(graph, V, i-E, 0, i);
         }
     }
     
-    //printf("\n");
+    // printf("\n");
     
     // Print graph
-    //printf("Original Graph:\n\n");
-    //printGraph(graph);
+    // printf("Original Graph:\n\n");
+    // printGraph(graph);
     
     // Store distance of each original vertex from extra vertex(including itself)
     int _dist[V+1];
@@ -255,13 +255,13 @@ int main(){
     
     
     // New graph with all positive weight distance
-    //printf("Updated Graph:\n\n");
-    //printGraph(graph);
+    // printf("Updated Graph:\n\n");
+    // printGraph(graph);
     
-    //Matrix to store distance of every vertex with every other vertex
+    // Matrix to store distance of every vertex with every other vertex
     int distance[V][V];
-    //Running Dijsktra for every vertex as source
-    for(int i=0; i<V; i++)
+    // Running Dijsktra for every vertex as source
+    for(int i = 0; i < V; i++)
     {
         int __dist[V];
         
@@ -269,7 +269,7 @@ int main(){
         int* dist_final = Dijsktra(graph, V, E, i, __dist);
         
         // Update the final matrix distance
-        for(int j=0; j<V; j++)
+        for(int j = 0; j < V; j++)
         {
             distance[i][j] = dist_final[j];
         }
@@ -277,9 +277,9 @@ int main(){
     
     printf("Final Result\n");
     printf("(Value 2147483648 indicates vertex v is not reachable from vertex u)\n\n");
-    for(int i=0; i<V; i++)
+    for(int i = 0; i < V; i++)
     {
-        for(int j=0; j<V; j++)
+        for(int j = 0; j < V; j++)
         {
             if(distance[i][j] == INT_MAX)
             {
